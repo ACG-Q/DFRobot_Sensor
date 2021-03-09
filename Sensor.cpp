@@ -43,38 +43,39 @@ void Sensor::switchMode(uint8_t &mode)
 
 
 
-Sensor_IIC::Sensor_IIC(uint8_t mode=NORMAL_POWER_MODE):
+Sensor_IIC::Sensor_IIC(uint8_t mode=NORMAL_POWER_MODE,Wire &Wire):
 Sensor(mode){
   _deviceAddr = IIC_ADDR;
+  _pWire = Wire;
 };
 
 int Sensor_IIC::begin()
 {
-  Wire.begin();
+  _pWire.begin();
   return Sensor::begin();
 };
 
 void Sensor_IIC::writeReg(uint8_t Reg, void* data,size_t s)
 {
   uint8_t *_data = (uint8_t *)data;
-  Wire.beginTransmission(_deviceAddr);
-  Wire.write(&Reg);
+  _pWire.beginTransmission(_deviceAddr);
+  _pWire.write(&Reg);
   for(uint16_t i=0; i<s; i++){
-    Wire.write(_data[i]);
+    _pWire.write(_data[i]);
   }
-  Wire.endTransmission();
+  _pWire.endTransmission();
 };
 
 uint16_t Sensor_IIC::readReg(uint8_t Reg, void* data, size_t s)
 {
   uint8_t* _data = (uint8_t *)data;
   uint16_t count = 0;
-  Wire.beginTransmission(_deviceAddr);
-  Wire.write(&Reg);
-  Wire.endTransmission();
-  Wire.requestFrom(_deviceAddr, (uint8_t)s, (uint8_t)TRUE);
+  _pWire.beginTransmission(_deviceAddr);
+  _pWire.write(&Reg);
+  _pWire.endTransmission();
+  _pWire.requestFrom(_deviceAddr, (uint8_t)s, (uint8_t)TRUE);
   for(uint16_t i=0; i<s; i++){
-    *_data++ = Wire.read();
+    *_data++ = _pWire.read();
     count++;
   }
   return count;

@@ -104,7 +104,8 @@ class Sensor_IIC:public Sensor
 {
 public:
   uint8_t _deviceAddr;
-  Sensor_IIC(uint8_t mode=NORMAL_POWER_MODE);
+  Wire _pWire;
+  Sensor_IIC(uint8_t mode=NORMAL_POWER_MODE,Wire &Wire);
   /**
    * @brief 初始化函数
    * @return 返回0表示初始化成功，返回其他值表示初始化失败
