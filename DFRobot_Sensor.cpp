@@ -32,9 +32,9 @@ uint16_t DFRobot_Sensor::begin()
 void DFRobot_Sensor::setLED(uint8_t r,uint8_t g,uint8_t b)
 {
   sColor_t color={
-    .g=g,
-    .r=r,
-    .b=b
+    .g=g>>2,
+    .r=r>>3,
+    .b=b>>3
   };
   writeReg(SENSOR_COLOR_LED_ADDR, &color, 2);
 };

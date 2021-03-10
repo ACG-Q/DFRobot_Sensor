@@ -1,35 +1,40 @@
-#######################################
+﻿#######################################
 # Syntax Coloring Map For DFRobot_Sensor
 #######################################
 
 #######################################
-# Datatypes (KEYWORD1) 数据类型
+# Datatypes (KEYWORD1)
 #######################################
 
-DFRobot_Sensor        KEYWORD1
-DFRobot_Sensor_IIC    KEYWORD1
-DFRobot_Sensor_SPI    KEYWORD1
+DFRobot_Sensor            KEYWORD1
+DFRobot_Sensor_IIC        KEYWORD1
+DFRobot_Sensor_SPI        KEYWORD1
 
 #######################################
-# Methods and Functions (KEYWORD2) 方法和功能
+# Methods and Functions (KEYWORD2)
 #######################################
 
-begin                 KEYWORD2
-soundStrengthDB       KEYWORD2
-lightStrengthLux      KEYWORD2
-switchMode            KEYWORD2
-write_bytes           KEYWORD2
-setLED                KEYWORD2
-
-
-#######################################
-# Instances (KEYWORD2) 实例
-#######################################
+begin                     KEYWORD2
+soundStrengthDB           KEYWORD2
+lightStrengthLux          KEYWORD2
+switchMode                KEYWORD2
+write_bytes               KEYWORD2
+setLED                    KEYWORD2
 
 
 #######################################
-# Constants (LITERAL1) 常量
+# Instances (KEYWORD2)
 #######################################
+
+controlLed                KEYWORD2
+readLight                 KEYWORD2
+readSound                 KEYWORD2
+switchMode                KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
 COLOR_RGB565_BLACK        LITERAL1
 COLOR_RGB565_NAVY         LITERAL1
 COLOR_RGB565_DGREEN       LITERAL1
