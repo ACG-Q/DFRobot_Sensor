@@ -8,7 +8,7 @@
  * @n 从寄存器3 读取数据，读到的是芯片版本0xDF
  * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
- * @author [Ouki](ouki.wang@dfrobot.com)
+ * @author [liuji](liuji.liu@dfrobot.com)
  * @version  V1.0
  * @date  2021-03-10
  * @url https://github.com/acg-q/DFRobot_Sensor
@@ -16,9 +16,9 @@
 #ifndef __DFROBOT_SENSOR_H
 #define __DFROBOT_SENSOR_H
 
-#includes <Arduino.h>
-#includes <Wire.h>
-#includes <SPI.h>
+#include <Arduino.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // 颜色
 #define  COLOR_RGB565_BLACK     0x0000      // 黑色    
@@ -63,9 +63,9 @@ public:
    * -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
    */
   typedef struct{
-    uint8_t g:  5,
-    uint8_t b:  6,
-    uint8_t r:  5
+    uint8_t g: 5;
+    uint8_t b: 6;
+    uint8_t r: 5;
   }__attribute__ ((packed)) sColor_t;
   
   /*
@@ -164,9 +164,9 @@ public:
   /**
    * @brief 切换模式
    * @param mode 可以是eLowPowerMode_t和eHighSpeedMode_t类型和ePrecisionMode_t;也可以是三者组合
-   * @return 返回0操作成功, 返回其他值操作失败
+   * @return 返回true操作成功, 返回false操作失败
    */
-  uint16_t switchMode(uint8_t mode);
+  bool switchMode(uint8_t mode);
   
 protected:
 
@@ -191,25 +191,23 @@ private:
   uint8_t _mode;
 };
 
-class DFRobot_Sensor_IIC::public DFRobot_Sensor
+class DFRobot_Sensor_IIC:public DFRobot_Sensor
 {
 public:
-  DFRobot_Sensor_IIC(TwoWire *_pWire=&Wire, uint8_t mode);
+  DFRobot_Sensor_IIC(TwoWire *pWire=&Wire, uint8_t mode=eNomalPrecision+eNormalSpeed+eNormalPower);
   
   /**
    * @brief 初始化函数
-   * @param speed 波特率
    * @return 返回0表示初始化成功，返回其他值表示初始化失败
    */
-  uint16_t begin(uint16_t speed);
+  uint16_t begin();
 
 protected:
-  
   /**
    * @brief 通过IIC总线写入寄存器值
    * @param reg  寄存器地址 8bits
    * @param pBuf 要写入数据的存放缓存
-   * @param size 要写入数据的长度
+   * @param quantity 要写入数据的长度
    * @return 返回实际读取的长度，返回0表示读取失败
    */
   virtual void writeReg(uint8_t reg,void* pData,size_t quantity);
@@ -218,7 +216,7 @@ protected:
    * @brief 通过IIC总线读取寄存器值
    * @param reg  寄存器地址 8bits
    * @param pBuf 要写入数据的存放缓存
-   * @param size 要写入数据的长度
+   * @param quantity 要写入数据的长度
    * @return 返回实际读取的长度，返回0表示读取失败
    */
   virtual uint16_t readReg(uint8_t reg,void* pBuf,size_t quantity);
@@ -228,18 +226,16 @@ private:
   uint8_t _deviceAddr;
 };
 
-
-class DFRobot_Sensor_SPI::public DFRobot_Sensor
+class DFRobot_Sensor_SPI:public DFRobot_Sensor
 {
 public:
-  DFRobot_Sensor_SPI(uint8_t mode, uint8_t csPin);
+  DFRobot_Sensor_SPI(SPIClass* pSpi, uint8_t mode, uint8_t csPin);
   
   /**
    * @brief 初始化函数
-   * @param speed 波特率
    * @return 返回0表示初始化成功，返回其他值表示初始化失败
    */
-  uint16_t begin(uint16_t speed);
+  uint16_t begin();
 
 protected:
   
@@ -262,6 +258,7 @@ protected:
   virtual uint16_t readReg(uint8_t reg,void* pBuf,size_t quantity);
 
 private:
+  SPIClass* _pSpi;
   uint8_t _csPin;
 };
 

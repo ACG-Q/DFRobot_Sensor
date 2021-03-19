@@ -12,21 +12,15 @@
  * @url https://github.com/acg-q/DFRobot_Sensor
  */
 #include <DFRobot_Sensor.h>
+#include <SPI.h>
 
-sMode_t mode = {
-  .lowpower = eLowPower,
-  .highspeed = eHighSpeed,
-  .precision = eNomalPrecision,
-  .reserved = eLowPower,
-  .ready = eLowPower
-};
-
-DFRobot_Sensor_SPI sensor(&SPI, 13, ,mode);
+DFRobot_Sensor_SPI sensor(&SPI, DFRobot_Sensor::eLowPower+DFRobot_Sensor::eNomalPrecision, 13);
 
 void setup(void)
 {
+  Serial.begin(115200);
   /*在这里一致等到芯片初始化完成才能退出*/
-  while(sensor.begin(115200) != 0){
+  while(sensor.begin() != 0){
     Serial.println("初始化芯片失败，请确认芯片连接是否正确");
     delay(1000);
   }

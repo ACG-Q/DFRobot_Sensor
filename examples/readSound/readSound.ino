@@ -14,21 +14,15 @@
  * @url https://github.com/acg-q/DFRobot_Sensor
  */
 #include <DFRobot_Sensor.h>
+#include <Wire.h>
 
-sMode_t mode = {
-  .lowpower = eLowPower,
-  .highspeed = eHighSpeed,
-  .precision = eNomalPrecision,
-  .reserved = eLowPower,
-  .ready = eLowPower
-};
-
-DFRobot_Sensor_IIC sensor(&Wire, mode);
+DFRobot_Sensor_IIC sensor(&Wire, DFRobot_Sensor::eLowPower+DFRobot_Sensor::eNomalPrecision);
 
 void setup(void)
 {
+  Serial.begin(115200);
   /*在这里一致等到芯片初始化完成才能退出*/
-  while(sensor.begin(115200) != 0){
+  while(sensor.begin() != 0){
     Serial.println("初始化芯片失败，请确认芯片连接是否正确");
     delay(1000);
   }
